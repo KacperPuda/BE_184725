@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  prestashop:
+    image: yacheto/be_184725:latest
+    user: root
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      PS_INSTALL_AUTO: ${PS_INSTALL_AUTO:-1}  #to instaluje cos tam
+      DB_PASSWD: ${DB_PASSWD:-student}
+      DB_NAME: ${DB_NAME:-BE_184725}
+      DB_SERVER: ${DB_SERVER:-db}
+      DB_PREFIX: ${DB_PREFIX:-ps_}
+      PS_DOMAIN: ${PS_DOMAIN:-localhost:18472}
+      PS_FOLDER_INSTALL: ${PS_FOLDER_INSTALL:-install-dev}
+      PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN:-admin-dev}
+      PS_COUNTRY: ${PS_COUNTRY:-pl}
+      PS_LANGUAGE: ${PS_LANGUAGE:-pl}
+      PS_DEV_MODE: ${PS_DEV_MODE:-0}
+      ADMIN_MAIL: ${ADMIN_MAIL:-demo@prestashop.com}
+      ADMIN_PASSWD: ${ADMIN_PASSWD:-prestashop_demo}
+    ports:
+      - "18472:443"
+    networks:
+      - admin-mysql_default
+
+networks:
+  admin-mysql_default:
+    external: true
