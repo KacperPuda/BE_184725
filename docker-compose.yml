@@ -23,6 +23,8 @@ services:
       PS_DOMAIN: ${PS_DOMAIN:-localhost:18472}
     ports:
       - "18472:443"
+    networks:
+      - admin-mysql_default
 networks:
   admin-mysql_default:
     external: true
