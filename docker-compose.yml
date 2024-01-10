@@ -26,7 +26,7 @@ services:
     volumes:
       - ./sqldump.sql:/docker-entrypoint-initdb.d/sqldump.sql
       - ./init.sh:/var/www/html/init.sh
-    command: sh -c './init.sh'
+    command: sh -c '/var/www/html/init.sh'
     networks:
       - admin-mysql_default
 networks:
